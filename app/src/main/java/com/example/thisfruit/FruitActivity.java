@@ -1,11 +1,11 @@
 package com.example.thisfruit;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-
+import java.util.Objects;
 public class FruitActivity extends AppCompatActivity {
 
 
@@ -18,7 +18,6 @@ public class FruitActivity extends AppCompatActivity {
 
         ViewPager mViewPager = findViewById(R.id.vpPager);
         mViewPager.setAdapter(adapterViewPager);
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int currentPage = 0;
@@ -28,6 +27,7 @@ public class FruitActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onPageSelected(int position) {
 
@@ -36,8 +36,8 @@ public class FruitActivity extends AppCompatActivity {
 
                 if (fragment != null &&
                         currentPage != position) {
-                    Log.e("Activity", "onPageSelected: stop" + currentPage);
                     ((Callback) adapterViewPager.get(currentPage)).onPageChanged();
+
 
                 }
                 currentPage = position;
@@ -52,10 +52,10 @@ public class FruitActivity extends AppCompatActivity {
     }
 
 
+
     public interface Callback {
         void onPageChanged();
     }
-
 
 
 }
