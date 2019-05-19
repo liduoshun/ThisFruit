@@ -8,19 +8,16 @@ import android.util.Log;
 
 public class FruitActivity extends AppCompatActivity {
 
-    private MyPagerAdapter adapterViewPager;
-
-    private ViewPager mViewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_pager);
 
-        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        final MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = findViewById(R.id.vpPager);
+        ViewPager mViewPager = findViewById(R.id.vpPager);
+        mViewPager.setAdapter(adapterViewPager);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -34,23 +31,15 @@ public class FruitActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                FruitFragment fragment = (FruitFragment) adapterViewPager.poFrag.get(currentPage);
+                FruitFragment fragment = (FruitFragment) adapterViewPager.get(position);
 
-                Log.e("TAG", "onPageSelected: " + position+ "aa"+currentPage);
-                FruitFragment a = new FruitFragment();
-                boolean b = fragment instanceof Callback;
 
-                Log.e("ssssss", "onPageSelected:hhhhhhh "+b);
-
-                if (fragment instanceof Callback &&
+                if (fragment != null &&
                         currentPage != position) {
-
-                    Log.e("aaaaaaa", "onPageScrolled: " );
-                    ((Callback)adapterViewPager.poFrag.get(currentPage)).onPageChanged();
+                    Log.e("Activity", "onPageSelected: stop" + currentPage);
+                    ((Callback) adapterViewPager.get(currentPage)).onPageChanged();
 
                 }
-                boolean c= fragment instanceof Callback;
-                Log.e("instan",a+"");
                 currentPage = position;
             }
 
@@ -60,16 +49,8 @@ public class FruitActivity extends AppCompatActivity {
         });
 
         mViewPager.setOffscreenPageLimit(1);
-
-        setupViewPager(mViewPager);
     }
 
-    private void setupViewPager(ViewPager viewPager){
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FruitFragment());
-        viewPager.setAdapter(adapter);
-
-    }
 
     public interface Callback {
         void onPageChanged();

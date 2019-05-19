@@ -13,18 +13,12 @@ import java.util.Map;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-    public static Map<Integer, FruitFragment> poFrag = new HashMap<>();
+    private Map<Integer, FruitFragment> poFrag;
 
-
-    private final List<FruitFragment> mFragmentList = new ArrayList<>();
-
-
-    public void addFragment(FruitFragment fragment){
-        mFragmentList.add(fragment);
-    }
 
     public MyPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
+        poFrag = new HashMap<>();
     }
 
     @Override
@@ -34,7 +28,9 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
         return vaFragment;
     }
 
-
+    public Fragment get(int position) {
+        return poFrag.get(position);
+    }
     @Override
     public int getCount() {
         return 17;

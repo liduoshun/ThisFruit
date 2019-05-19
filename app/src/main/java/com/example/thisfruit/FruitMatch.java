@@ -6,9 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FruitMatch {
-    private static Map<Integer, Integer> ans = new HashMap<>();
+    private static Map<Integer, Integer> ans;
 
-    FruitMatch(){
+    static {
+        ans = new HashMap<>();
         ans.put(R.drawable.a01, R.drawable.a02);
         ans.put(R.drawable.a11, R.drawable.a12);
         ans.put(R.drawable.a21, R.drawable.a22);
@@ -27,6 +28,7 @@ public class FruitMatch {
         ans.put(R.drawable.a151, R.drawable.a152);
         ans.put(R.drawable.a161, R.drawable.a162);
     }
+
 
     public static boolean isMatch(int head, int img) {
         return ans.get(head) == img;
