@@ -27,9 +27,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
 
     private MediaPlayer mMediaPlayer;
 
-    /** Handles audio focus when playing a sound file */
-
-    AudioManager mAudioManager;
+    private final int NUM_OF_FRAGMENT = 17;
 
 
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
@@ -39,26 +37,18 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
             releaseMediaPlayer();
         }
     };
+    /**
+     * Handles audio focus when playing a sound file
+     */
 
-    int NUM_OF_FRAGMENT = 17;
-
-
-    ImageView head;
-    ImageView imageView1;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView imageView4;
-
-    FruitMatch fruitMatch = new FruitMatch();
+    private AudioManager mAudioManager;
 
 
     public static FruitFragment newInstance(int position) {
         FruitFragment myFragment = new FruitFragment();
-
         Bundle args = new Bundle();
         args.putInt("position", position);
         myFragment.setArguments(args);
-
         return myFragment;
     }
 
@@ -75,11 +65,11 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
 
         assert getArguments() != null;
         final int position = getArguments().getInt("position", 0);
-        head = view.findViewById(R.id.handPaint);
-        imageView1 = view.findViewById(R.id.matchPaint1);
-        imageView2 = view.findViewById(R.id.matchPaint2);
-        imageView3 = view.findViewById(R.id.matchPaint3);
-        imageView4 = view.findViewById(R.id.matchPaint4);
+        ImageView head = view.findViewById(R.id.handPaint);
+        ImageView imageView1 = view.findViewById(R.id.matchPaint1);
+        ImageView imageView2 = view.findViewById(R.id.matchPaint2);
+        ImageView imageView3 = view.findViewById(R.id.matchPaint3);
+        ImageView imageView4 = view.findViewById(R.id.matchPaint4);
 
 
         head.setImageResource(getImageId(position, 1));
@@ -141,8 +131,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
     }
 
     public int getImageId(int position, int img) {
-        int imageId = getResources().getIdentifier("a" + position + img, "drawable", requireActivity().getPackageName());
-        return imageId;
+        return getResources().getIdentifier("a" + position + img, "drawable", requireActivity().getPackageName());
     }
 
 
@@ -178,6 +167,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
             Log.e(TAG, "releaseMediaPlayer: ififif" );
             // Regardless of the current state of the media player, release its resources
             // because we no longer need it.
+            Log.e(TAG, "releaseMediaPlayer:  released");
             mMediaPlayer.release();
 
             // Set the media player back to null. For our code, we've decided that

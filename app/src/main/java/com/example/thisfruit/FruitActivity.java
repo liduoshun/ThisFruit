@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-
 import java.util.Objects;
-
-
 public class FruitActivity extends AppCompatActivity {
 
 
@@ -17,8 +14,10 @@ public class FruitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_pager);
 
-        ViewPager mViewPager = findViewById(R.id.vpPager);
+        final MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
 
+        ViewPager mViewPager = findViewById(R.id.vpPager);
+        mViewPager.setAdapter(adapterViewPager);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             private int currentPage = 0;
@@ -32,12 +31,13 @@ public class FruitActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
-                FruitFragment fragment = MyPagerAdapter.poFrag.get(currentPage);
+                FruitFragment fragment = (FruitFragment) adapterViewPager.get(position);
+
 
                 if (fragment != null &&
                         currentPage != position) {
+                    ((Callback) adapterViewPager.get(currentPage)).onPageChanged();
 
-                    ((Callback) Objects.requireNonNull(MyPagerAdapter.poFrag.get(currentPage))).onPageChanged();
 
                 }
                 currentPage = position;
@@ -49,16 +49,9 @@ public class FruitActivity extends AppCompatActivity {
         });
 
         mViewPager.setOffscreenPageLimit(1);
-
-        setupViewPager(mViewPager);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FruitFragment());
-        viewPager.setAdapter(adapter);
 
-    }
 
     public interface Callback {
         void onPageChanged();

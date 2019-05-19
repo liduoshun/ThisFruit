@@ -5,11 +5,12 @@ import android.annotation.SuppressLint;
 import java.util.HashMap;
 import java.util.Map;
 
-class FruitMatch {
-    @SuppressLint("UseSparseArrays")
-    private static Map<Integer, Integer> ans = new HashMap<>();
+public class FruitMatch {
+    private static Map<Integer, Integer> ans;
 
-    FruitMatch() {
+    static {
+        ans = new HashMap<>();
+
         ans.put(R.drawable.a01, R.drawable.a02);
         ans.put(R.drawable.a11, R.drawable.a12);
         ans.put(R.drawable.a21, R.drawable.a22);
@@ -29,8 +30,9 @@ class FruitMatch {
         ans.put(R.drawable.a161, R.drawable.a162);
     }
 
-    static boolean isMatch(int head, int img) {
-        return !(ans.get(head) != img);
+    public static boolean isMatch(int head, int img) {
+        return ans.get(head) == img;
+
     }
 
 
