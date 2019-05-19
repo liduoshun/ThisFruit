@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,10 +68,12 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
 
         View view = inflater.inflate(R.layout.fruit_fragment, container, false);
 
+        Log.e(TAG, "onCreateView: " );
 
         mAudioManager = (AudioManager) requireActivity().getSystemService(Context.AUDIO_SERVICE);
 
 
+        assert getArguments() != null;
         final int position = getArguments().getInt("position", 0);
         head = view.findViewById(R.id.handPaint);
         imageView1 = view.findViewById(R.id.matchPaint1);
@@ -170,8 +172,10 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
 
     private void releaseMediaPlayer() {
 
+        Log.e(TAG, "releaseMediaPlayer: " + mMediaPlayer);
         // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
+            Log.e(TAG, "releaseMediaPlayer: ififif" );
             // Regardless of the current state of the media player, release its resources
             // because we no longer need it.
             mMediaPlayer.release();
@@ -185,6 +189,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
             // unregisters the AudioFocusChangeListener so we don't get anymore callbacks.
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
 
+            Log.e(TAG, "releaseMediaPlayer: ");
         }
     }
 
@@ -216,6 +221,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
     @Override
     public void onStop() {
         super.onStop();
+        Log.e(TAG, "onStop: " );
         // When the activity is stopped, release the media player resources because we won't
         // be playing any more sounds.
         releaseMediaPlayer();
@@ -224,6 +230,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
     @Override
     public void onPause() {
         super.onPause();
+        Log.e(TAG, "onPause: " );
 
         releaseMediaPlayer();
     }
@@ -263,6 +270,7 @@ public class FruitFragment extends Fragment implements FruitActivity.Callback{
     @Override
     public void onPageChanged() {
         releaseMediaPlayer();
+        Log.e(TAG, "onPageChanged: " );// here
     }
 
 }

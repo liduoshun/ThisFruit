@@ -1,14 +1,15 @@
 package com.example.thisfruit;
 
-import android.media.AudioFocusRequest;
+import android.annotation.SuppressLint;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FruitMatch {
+class FruitMatch {
+    @SuppressLint("UseSparseArrays")
     private static Map<Integer, Integer> ans = new HashMap<>();
 
-    FruitMatch(){
+    FruitMatch() {
         ans.put(R.drawable.a01, R.drawable.a02);
         ans.put(R.drawable.a11, R.drawable.a12);
         ans.put(R.drawable.a21, R.drawable.a22);
@@ -28,8 +29,8 @@ public class FruitMatch {
         ans.put(R.drawable.a161, R.drawable.a162);
     }
 
-    public static boolean isMatch(int head, int img) {
-        return ans.get(head) == img;
+    static boolean isMatch(int head, int img) {
+        return !(ans.get(head) != img);
     }
 
 

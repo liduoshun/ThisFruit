@@ -1,9 +1,9 @@
 package com.example.thisfruit;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 
 import java.util.ArrayList;
@@ -13,24 +13,26 @@ import java.util.Map;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-    public static Map<Integer, FruitFragment> poFrag = new HashMap<>();
+    @SuppressLint("UseSparseArrays")
+    static Map<Integer, FruitFragment> poFrag = new HashMap<>();
 
 
-    private final List<FruitFragment> mFragmentList = new ArrayList<>();
+    protected final List<FruitFragment> mFragmentList;
 
 
-    public void addFragment(FruitFragment fragment){
+    void addFragment(FruitFragment fragment) {
         mFragmentList.add(fragment);
     }
 
-    public MyPagerAdapter(FragmentManager fragmentManager) {
+    MyPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
+        mFragmentList = new ArrayList<>();
     }
 
     @Override
     public Fragment getItem(int position) {
         FruitFragment vaFragment = FruitFragment.newInstance(position);
-        poFrag.put(position,vaFragment);
+        poFrag.put(position, vaFragment);
         return vaFragment;
     }
 

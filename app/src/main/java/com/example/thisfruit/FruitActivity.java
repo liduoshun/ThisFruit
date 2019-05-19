@@ -1,16 +1,15 @@
 package com.example.thisfruit;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import java.util.Objects;
 
 
 public class FruitActivity extends AppCompatActivity {
-
-    private MyPagerAdapter adapterViewPager;
-
-    private ViewPager mViewPager;
 
 
     @Override
@@ -18,9 +17,7 @@ public class FruitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_pager);
 
-        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
-
-        mViewPager = findViewById(R.id.vpPager);
+        ViewPager mViewPager = findViewById(R.id.vpPager);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -31,26 +28,18 @@ public class FruitActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onPageSelected(int position) {
 
-                FruitFragment fragment = (FruitFragment) adapterViewPager.poFrag.get(currentPage);
+                FruitFragment fragment = MyPagerAdapter.poFrag.get(currentPage);
 
-                Log.e("TAG", "onPageSelected: " + position+ "aa"+currentPage);
-                FruitFragment a = new FruitFragment();
-                boolean b = fragment instanceof Callback;
-
-                Log.e("ssssss", "onPageSelected:hhhhhhh "+b);
-
-                if (fragment instanceof Callback &&
+                if (fragment != null &&
                         currentPage != position) {
 
-                    Log.e("aaaaaaa", "onPageScrolled: " );
-                    ((Callback)adapterViewPager.poFrag.get(currentPage)).onPageChanged();
+                    ((Callback) Objects.requireNonNull(MyPagerAdapter.poFrag.get(currentPage))).onPageChanged();
 
                 }
-                boolean c= fragment instanceof Callback;
-                Log.e("instan",a+"");
                 currentPage = position;
             }
 
@@ -64,7 +53,7 @@ public class FruitActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager) {
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FruitFragment());
         viewPager.setAdapter(adapter);
@@ -74,7 +63,6 @@ public class FruitActivity extends AppCompatActivity {
     public interface Callback {
         void onPageChanged();
     }
-
 
 
 }
