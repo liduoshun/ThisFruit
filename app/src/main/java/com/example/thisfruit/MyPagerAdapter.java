@@ -3,12 +3,16 @@ package com.example.thisfruit;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
+
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+    public Map<Integer, Fragment> poFrag = new HashMap<>();
 
     private final List<FruitFragment> mFragmentList = new ArrayList<>();
 
@@ -23,14 +27,15 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return FruitFragment.newInstance(position);
+        Fragment vaFragment = FruitFragment.newInstance(position);
+        poFrag.put(position,vaFragment);
+        return vaFragment;
     }
 
 
     @Override
     public int getCount() {
-        return 5;
+        return 17;
     }
-
 
 }

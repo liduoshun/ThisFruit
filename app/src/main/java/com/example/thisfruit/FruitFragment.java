@@ -18,12 +18,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+
 
 import static android.content.ContentValues.TAG;
-import static android.support.v4.content.ContextCompat.getSystemService;
 
-public class FruitFragment extends Fragment {
+
+public class FruitFragment extends Fragment implements FruitActivity.Callback{
 
     private MediaPlayer mMediaPlayer;
 
@@ -40,7 +40,7 @@ public class FruitFragment extends Fragment {
         }
     };
 
-    int NUM_OF_FRAGMENT = 5;
+    int NUM_OF_FRAGMENT = 17;
 
 
     ImageView head;
@@ -65,10 +65,13 @@ public class FruitFragment extends Fragment {
     @SuppressLint("ResourceType")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fruit_fragment, container, false);
 
-        mAudioManager = (AudioManager) getSystemService(this.getContext(),null);
-        Log.e(TAG, "onCreateView: "+"manager ok" );
+        Log.e(TAG, "onCreateView");
+
+        mAudioManager = (AudioManager) requireActivity().getSystemService(Context.AUDIO_SERVICE);
+
 
         final int position = getArguments().getInt("position", 0);
         head = view.findViewById(R.id.handPaint);
@@ -152,9 +155,6 @@ public class FruitFragment extends Fragment {
         list.remove(list.indexOf(position));
 
         Collections.shuffle(list);
-        Log.e("s", "" + (int) list.get(0));
-        Log.e("ss", "" + (int) list.get(1));
-        Log.e("sss", "" + (int) list.get(2));
 
         return list;
     }
@@ -163,6 +163,7 @@ public class FruitFragment extends Fragment {
         if(ans){
             Toast.makeText(this.getContext(), "good job", Toast.LENGTH_SHORT).show();
             focus(R.raw.right);
+            Log.e(TAG, "right: "+this );
         }else{
             Toast.makeText(this.getContext(), "try again", Toast.LENGTH_SHORT).show();
             focus(R.raw.wrong);
@@ -170,8 +171,11 @@ public class FruitFragment extends Fragment {
     }
 
     private void releaseMediaPlayer() {
+
+        Log.e(TAG, "releaseMediaPlayer: " + mMediaPlayer+"  "+this);
         // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
+            Log.e(TAG, "releaseMediaPlayer: ififif" );
             // Regardless of the current state of the media player, release its resources
             // because we no longer need it.
             mMediaPlayer.release();
@@ -184,6 +188,8 @@ public class FruitFragment extends Fragment {
             // Regardless of whether or not we were granted audio focus, abandon it. This also
             // unregisters the AudioFocusChangeListener so we don't get anymore callbacks.
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
+
+            Log.e(TAG, "releaseMediaPlayer: ");
         }
     }
 
@@ -215,8 +221,17 @@ public class FruitFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        Log.e(TAG, "onStop: " );
         // When the activity is stopped, release the media player resources because we won't
         // be playing any more sounds.
+        releaseMediaPlayer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: " );
+
         releaseMediaPlayer();
     }
 
@@ -241,6 +256,21 @@ public class FruitFragment extends Fragment {
             // media player once the sound has finished playing.
             mMediaPlayer.setOnCompletionListener(mCompletionListener);
         }
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//        } else {
+//            releaseMediaPlayer();
+//        }
+//    }
+
+    @Override
+    public void onPageChanged() {
+        releaseMediaPlayer();
+        Log.e(TAG, "onPageChanged: " );// here
     }
 
 }
