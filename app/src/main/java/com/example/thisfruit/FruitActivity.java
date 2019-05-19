@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+
 public class FruitActivity extends AppCompatActivity {
 
     private MyPagerAdapter adapterViewPager;
@@ -18,6 +19,8 @@ public class FruitActivity extends AppCompatActivity {
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
 
         mViewPager = findViewById(R.id.vpPager);
+
+        mViewPager.setOffscreenPageLimit(3);
 
         setupViewPager(mViewPager);
     }

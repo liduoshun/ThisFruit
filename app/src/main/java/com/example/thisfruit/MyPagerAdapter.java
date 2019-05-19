@@ -3,6 +3,7 @@ package com.example.thisfruit;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,13 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+        return FruitFragment.newInstance(position);
     }
+
 
     @Override
     public int getCount() {
-        return mFragmentList.size();
+        return 5;
     }
 
 
