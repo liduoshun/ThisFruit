@@ -28,23 +28,30 @@ public class FruitActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.e("", "onPageSelected: "+position);
-                FruitFragment fragment = (FruitFragment) adapterViewPager.getItem(currentPage);
 
-                Log.e("", "onPageSelected: "+"currentPage  "+currentPage+"   fragment  "+fragment );
+                FruitFragment fragment = (FruitFragment) adapterViewPager.poFrag.get(currentPage);
+
+                Log.e("TAG", "onPageSelected: " + position+ "aa"+currentPage);
+                FruitFragment a = new FruitFragment();
+                boolean b = fragment instanceof Callback;
+
+                Log.e("ssssss", "onPageSelected:hhhhhhh "+b);
+
                 if (fragment instanceof Callback &&
                         currentPage != position) {
+
+                    Log.e("aaaaaaa", "onPageScrolled: " );
                     ((Callback)adapterViewPager.poFrag.get(currentPage)).onPageChanged();
 
-                    Log.e("", "onPageSelected: "+"currentPage  "+currentPage+"   fragment  "+fragment );
                 }
+                boolean c= fragment instanceof Callback;
+                Log.e("instan",a+"");
                 currentPage = position;
-                Log.e("", "onPageSelected: "+"currentPage  "+currentPage+"   fragment  "+fragment );
-
             }
 
             @Override
